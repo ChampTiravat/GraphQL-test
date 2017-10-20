@@ -1,0 +1,33 @@
+{
+  "name": "graphql-test-api",
+  "version": "1.0.0",
+  "description": "API Structure for GraphQL app",
+  "main": "./src/server.js",
+  "author": "<tiravat2016@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "nodemon --exec babel-node ./src/server.js"
+  },
+  "dependencies": {
+    "apollo-server-express": "^1.1.7",
+    "bcrypt": "^1.0.3",
+    "bluebird": "^3.5.1",
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.2",
+    "graphql": "^0.11.7",
+    "graphql-tools": "^2.5.1",
+    "jsonwebtoken": "^8.1.0",
+    "merge-graphql-schemas": "^1.2.0",
+    "mongoose": "^4.12.3",
+    "nodemon": "^1.12.1",
+    "passport": "^0.4.0",
+    "passport-jwt": "^3.0.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-stage-2": "^6.24.1"
+  }
+}
