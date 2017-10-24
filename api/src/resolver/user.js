@@ -13,11 +13,28 @@ export default {
         return null;
       }
     },
-    getUsers: async (parent, args, context) => {
-      try {
-        return await User.find({});
-      } catch (err) {
-        return [];
+    /**
+     * @desc Get all users from database
+     */
+    getUsers: async (parent, args, { user }) => {
+      if (user) {
+        try {
+          return await User.find({});
+        } catch (err) {
+          return {
+            success: false,
+            token: null,
+            error: ["Other exception"],
+            user: null
+          };
+        }
+      } else {
+        return {
+          success: false,
+          token: null,
+          error: ["Permission denied"],
+          user: null
+        };
       }
     }
   },
