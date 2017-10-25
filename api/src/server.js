@@ -8,6 +8,8 @@ import mongoose from "mongoose";
 import path from "path";
 import bluebird from "bluebird";
 
+import { attachUserToApolloContext } from "./helpers/authentication";
+
 const app = express();
 
 /**
@@ -39,9 +41,18 @@ const schema = makeExecutableSchema({
 app.use(
   "/graphql",
   bodyParser.json(),
-  graphqlExpress({
-    schema
-  })
+  attachUserToApolloContext,
+  (req, res, next) => {
+    console.log(req.user);
+    next();
+  },
+  graphqlExpress(req => ({
+    schema,
+    debug: true,
+    context: {
+      user: req.user || null
+    }
+  }))
 );
 
 /**
