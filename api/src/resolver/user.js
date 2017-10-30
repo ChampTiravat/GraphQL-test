@@ -25,7 +25,7 @@ export default {
             success: false,
             token: null,
             error: ["Other exception"],
-            user: null
+            user: []
           };
         }
       } else {

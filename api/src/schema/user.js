@@ -16,7 +16,7 @@ export default `
 
     type Query {
         getUser(name: String!): User!
-        getUsers: [User!]
+        getUsers: [User]!
     }
 
     type Mutation {
