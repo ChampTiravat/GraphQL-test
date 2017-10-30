@@ -4,6 +4,7 @@ import Link from "next/link";
 
 import { Form, InputGroup, Input } from "../components/Form";
 import { SuccessButton, PrimaryButton } from "../components/Button";
+import { LOGIN_MUTATION } from "../core/constants/graphql/user";
 
 class LoginForm extends React.Component {
   constructor(props) {
@@ -74,18 +75,4 @@ class LoginForm extends React.Component {
   }
 }
 
-const LoginMutation = gql`
-  mutation($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
-      success
-      error
-      token
-      user {
-        name
-        email
-      }
-    }
-  }
-`;
-
-export default graphql(LoginMutation)(LoginForm);
+export default graphql(LOGIN_MUTATION)(LoginForm);
