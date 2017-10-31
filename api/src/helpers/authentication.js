@@ -1,16 +1,6 @@
 import jwt from "jsonwebtoken";
 
 /**
- * @desc 
- */
-export const createNewResolver = (parentValue, args, context) => {};
-
-/**
- * @desc 
- */
-export const requiredAuthenticated = resolver => {};
-
-/**
  * @desc Attach an authenticated user(decoded from JWT payload) into apollo-server's context
  */
 export const attachUserToApolloContext = async (req, res, next) => {

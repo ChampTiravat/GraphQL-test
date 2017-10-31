@@ -18,6 +18,19 @@ export const Container = styled.div`
 export const UnAuthenticatedLayout = ({ children }) => (
   <Container>
     <Navbar />
+    <br />
+    <h3>Please signin to view the full content</h3>
+    <div>{children}</div>
+  </Container>
+);
+
+/**
+ *  @desc Main Layout for page components(use this if user is authenticated) 
+ *  @param props.children : Child Components 
+ */
+export const AuthenticatedLayout = ({ children }) => (
+  <Container>
+    <Navbar />
     <div>{children}</div>
   </Container>
 );

@@ -1,5 +1,7 @@
 import React from "react";
-import { gql, graphql } from "react-apollo";
+import { graphql } from "react-apollo";
+
+import { GET_USER_QUERY } from "../core/constants/graphql/user";
 
 class UsersList extends React.Component {
   constructor(props) {
@@ -38,13 +40,4 @@ class UsersList extends React.Component {
   }
 }
 
-const getUsersQuery = gql`
-  {
-    getUsers {
-      name
-      email
-    }
-  }
-`;
-
-export default graphql(getUsersQuery)(UsersList);
+export default graphql(GET_USER_QUERY)(UsersList);
