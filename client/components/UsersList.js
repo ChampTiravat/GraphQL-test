@@ -1,17 +1,15 @@
 import React from "react";
 import { graphql } from "react-apollo";
 
-import { GET_USER_QUERY } from "../core/constants/graphql/user";
+import { GET_USERS_QUERY } from "../core/constants/graphql/user";
 
 class UsersList extends React.Component {
   constructor(props) {
     super(props);
-
     this.renderUserItem = this.renderUserItem.bind(this);
   }
 
   componentDidMount() {
-    //if (this.props.data.getUsers.length === 0) {
     if (process.browser) {
       this.props.data.refetch && this.props.data.refetch();
     }
@@ -20,24 +18,24 @@ class UsersList extends React.Component {
   renderUserItem() {
     const { data: { loading, getUsers } } = this.props;
 
-    if (loading) {
-      return <li>Loading</li>;
-    } else {
-      if (getUsers) {
-        if (getUsers.length > 0) {
-          return getUsers.map((user, i) => <li key={i}>{user.name}</li>);
-        } else {
-          return <li>no user</li>;
-        }
+    let users
+    
+    if (getUsers) {
+      if (getUsers.length > 0) {
+        users = getUsers.map((user, i) => <li key={i}>{user.name}</li>);
       } else {
-        return <li>No connection T_T</li>;
+        users = <li>no user in DB</li>;
       }
     }
+
+    return loading ? <li>Loading</li> : users
+
   }
 
   render() {
     return <ul>{this.renderUserItem()}</ul>;
   }
+
 }
 
-export default graphql(GET_USER_QUERY)(UsersList);
+export default graphql(GET_USERS_QUERY)(UsersList);

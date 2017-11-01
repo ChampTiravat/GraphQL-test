@@ -3,40 +3,39 @@ import jwt from "jsonwebtoken";
 import passport from "passport";
 
 import User from "../models/User";
+import { requiredAuth } from '../helpers/permission'
 
 export default {
   Query: {
-    getUser: async (parent, { name }, context) => {
+    /**
+     * @desc Get a user which has the same name as the args.name
+     */
+    getUser: requiredAuth.createResolver( async (parent, { name }, context) => {
       try {
         return await User.findOne({ name });
       } catch (err) {
         return null;
       }
-    },
+    }),
     /**
      * @desc Get all users from database
      */
-    getUsers: async (parent, args, { user }) => {
-      if (user) {
-        try {
-          return await User.find({});
-        } catch (err) {
-          return {
-            success: false,
-            token: null,
-            error: ["Other exception"],
-            user: []
-          };
-        }
-      } else {
+    getUsers: requiredAuth.createResolver( async (parent, args, { user }) => {
+      try {
+        const users = await User.find({});
+        console.log('Sending getUsers')
+        console.log(users)
+        return users
+      } catch (err) {
         return {
           success: false,
           token: null,
-          error: ["Permission denied"],
-          user: null
+          error: ["Other exception"],
+          user: []
         };
       }
-    }
+      
+    })
   },
   Mutation: {
     /**
