@@ -43,7 +43,9 @@ app.use(
   bodyParser.json(),
   attachUserToApolloContext,
   (req, res, next) => {
-    console.log(req.user);
+    if (req.user) {
+      console.log('Current user :' + req.user.name);
+    }
     next();
   },
   graphqlExpress(req => ({

@@ -2,7 +2,7 @@ import { gql } from "react-apollo";
 
 /**
  * @desc Get all users from DB
- * @return type : [User!]
+ * @return type : [User]
  */
 export const GET_USERS_QUERY = gql`
   {

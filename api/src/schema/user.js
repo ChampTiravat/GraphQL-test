@@ -13,10 +13,10 @@ export default `
         error: [String!]
         user: User
     }
-
+    
     type Query {
-        getUser(name: String!): User!
-        getUsers: [User]!
+        getUser(name: String!): User
+        getUsers: [User]
     }
 
     type Mutation {

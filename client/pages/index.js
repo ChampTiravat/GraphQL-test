@@ -30,21 +30,31 @@ class Index extends React.Component {
       isLoggin: false
     }
 
-if (process.browser) {
+    
+  }
+
+  componentDidMount() {
+
+    if (process.browser) {
       const token = localStorage.getItem('token')
 
       if (!token) { 
         this.setState({isLoggin: false})
       }
 
+      // Verifying whether the current user is already authenticated or not
       try {
         JWTDecode(token)
-        
+        this.setState({
+          isLoggin: true
+        })
       } catch(err) {
         console.log(err)
         console.error('cannot decode the token, for some reason ;(')
+        this.setState({
+          isLoggin: false
+        })
       }
-
     }
   }
 
