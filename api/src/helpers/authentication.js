@@ -14,9 +14,11 @@ export const attachUserToApolloContext = async (req, res, next) => {
       }
       req.user = user;
     } catch (err) {
-      // Possible Values of err.name
-      // 'jwt malformed' === token not provided
-      // 'invalid token' === invalided token
+      /*
+        Possible Values of err.name
+          'jwt malformed' === token not provided
+          'invalid token' === invalided token 
+      */
       req.user = null;
     }
   }

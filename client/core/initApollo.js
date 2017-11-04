@@ -1,4 +1,7 @@
-import { ApolloClient, createNetworkInterface } from "react-apollo";
+import { ApolloClient } from "apollo-client";
+import { setContext } from "apollo-link-context";
+import { createHttpLink } from "apollo-link-http";
+import { InMemoryCache } from "apollo-cache-inmemory";
 import fetch from "isomorphic-fetch";
 
 let apolloClient = null;
@@ -8,36 +11,30 @@ if (!process.browser) {
   global.fetch = fetch;
 }
 
-const networkInterface = createNetworkInterface({
+/**
+ * @desc Constructing a Apollo Network Interface
+ */
+const HTTPLink = createHttpLink({
   uri: "http://localhost:4000/graphql", // Server URL (must be absolute)
-  opts: {
-    // Additional fetch() options like `credentials` or `headers`
-    credentials: "same-origin"
-  }
+  credentials: "same-origin" // Additional fetch() options like `credentials` or `headers`
 });
 
 /**
  * @desc Applying Apollo-client middleware(s)
  */
-networkInterface.use([
-  {
-    applyMiddleware: (req, next) => {
-      if (!req.options.headers) {
-        req.options.headers = {}; // If there's no headers object in the request, make one of it!
-      }
-      const authenticationToken = localStorage.getItem("token")
-        ? localStorage.getItem("token")
-        : null;
-      req.options.headers.authorization = authenticationToken;
-      next();
-    }
+const middlewareLink = setContext(() => ({
+  headers: {
+    authorization: localStorage.getItem("token") || ""
   }
-]);
+}));
+
+const link = middlewareLink.concat(HTTPLink);
 
 function create() {
   return new ApolloClient({
     ssrMode: !process.browser, // Disables forceFetch on the server (so queries are only run once)
-    networkInterface
+    link,
+    cache: new InMemoryCache()
   });
 }
 

@@ -3,14 +3,15 @@ import jwt from "jsonwebtoken";
 import passport from "passport";
 
 import User from "../models/User";
-import { requiredAuth } from '../helpers/permission'
+import { requiredAuth } from "../helpers/permission";
 
 export default {
   Query: {
     /**
      * @desc Get a user which has the same name as the args.name
+     * @return GraphQL User
      */
-    getUser: requiredAuth.createResolver( async (parent, { name }, context) => {
+    getUser: requiredAuth.createResolver(async (parent, { name }, context) => {
       try {
         return await User.findOne({ name });
       } catch (err) {
@@ -19,13 +20,14 @@ export default {
     }),
     /**
      * @desc Get all users from database
+     * @return GrpahQL [User]
      */
-    getUsers: requiredAuth.createResolver( async (parent, args, { user }) => {
+    getUsers: requiredAuth.createResolver(async (parent, args, { user }) => {
       try {
         const users = await User.find({});
-        console.log('Sending getUsers')
-        console.log(users)
-        return users
+        console.log("Sending getUsers");
+        console.log(users);
+        return users;
       } catch (err) {
         return {
           success: false,
@@ -34,7 +36,6 @@ export default {
           user: []
         };
       }
-      
     })
   },
   Mutation: {
