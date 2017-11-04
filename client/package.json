@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "apollo-client": "^2.0.1",
+    "apollo-link-context": "^1.0.0",
     "jwt-decode": "^2.2.0",
     "next": "^4.1.0",
     "prop-types": "^15.6.0",
