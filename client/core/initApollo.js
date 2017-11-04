@@ -1,4 +1,5 @@
-import { ApolloClient, createNetworkInterface } from "react-apollo";
+// import { createNetworkInterface } from "react-apollo";
+import { ApolloClient } from "apollo-client";
 import fetch from "isomorphic-fetch";
 
 let apolloClient = null;
