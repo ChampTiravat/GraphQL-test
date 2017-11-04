@@ -1,7 +1,9 @@
 import React from "react";
-import PropTypes from "prop-types";
+import { Provider } from "react-redux";
 import { ApolloProvider, getDataFromTree } from "react-apollo";
+import PropTypes from "prop-types";
 import Head from "next/head";
+
 import initApollo from "./initApollo";
 import initRedux from "./initRedux";
 
@@ -41,8 +43,10 @@ export default ComposedComponent => {
           await getDataFromTree(
             // No need to use the Redux Provider
             // because Apollo sets up the store for us
-            <ApolloProvider client={apollo} store={redux}>
-              <ComposedComponent url={url} {...composedInitialProps} />
+            <ApolloProvider client={apollo}>
+              <Provider store={redux}>
+                <ComposedComponent url={url} {...composedInitialProps} />
+              </Provider>
             </ApolloProvider>
           );
         } catch (error) {
@@ -59,12 +63,14 @@ export default ComposedComponent => {
 
         // No need to include other initial Redux state because when it
         // initialises on the client-side it'll create it again anyway
+        /* 
         serverState = {
           apollo: {
             // Only include the Apollo data state
             data: state.apollo.data
           }
         };
+        */
       }
 
       return {
@@ -83,8 +89,10 @@ export default ComposedComponent => {
       return (
         // No need to use the Redux Provider
         // because Apollo sets up the store for us
-        <ApolloProvider client={this.apollo} store={this.redux}>
-          <ComposedComponent {...this.props} />
+        <ApolloProvider client={this.apollo}>
+          <Provider store={this.redux}>
+            <ComposedComponent {...this.props} />
+          </Provider>
         </ApolloProvider>
       );
     }
