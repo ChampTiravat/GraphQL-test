@@ -43,6 +43,11 @@ const Navbar = () => (
         </Link>
       </NavbarLinkItem>
       <NavbarLinkItem>
+        <Link href="/chatroom" prefetch>
+          <NavbarLinkText>Chatroom</NavbarLinkText>
+        </Link>
+      </NavbarLinkItem>
+      <NavbarLinkItem>
         <Link href="/about" prefetch>
           <NavbarLinkText>About</NavbarLinkText>
         </Link>
