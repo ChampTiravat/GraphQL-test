@@ -1,11 +1,29 @@
 import React from "react";
+import styled from "styled-components";
 
+import { Form, Input } from "../components/Form";
+import { PrimaryButton } from "../components/Button";
 import { PageHeading } from "../components/Content";
 import {
   UnAuthenticatedLayout,
   AuthenticatedLayout
 } from "../components/Layout";
 import withData from "../core/withData";
+
+const ChatMessagesContainer = styled.ul`
+  width: 100%;
+  background-color: lightblue;
+  height: 400px;
+  padding: 0;
+  overflow-y: scroll;
+`;
+
+const ChatMessage = styled.li`
+  padding: 1em;
+  display: block;
+  font-size: 0.9em;
+  border: 2px solid #fff;
+`;
 
 const UnAuthenticatedUserContent = () => (
   <UnAuthenticatedLayout>
@@ -49,11 +67,15 @@ class Index extends React.Component {
     return isLoggin ? (
       <AuthenticatedLayout>
         <PageHeading>START CHATING WITH YOUR FRIENDS</PageHeading>
-        <ul>{messages.map((message, i) => <li key={i}>{message}</li>)}</ul>
-        <form onSubmit={this.handleSubmit}>
-          <input type="text" value={formData} onChange={this.handleChange} />
-          <button>Send</button>
-        </form>
+        <ChatMessagesContainer>
+          {messages.map((message, i) => (
+            <ChatMessage key={i}>{message}</ChatMessage>
+          ))}
+        </ChatMessagesContainer>
+        <Form onSubmit={this.handleSubmit}>
+          <Input type="text" value={formData} onChange={this.handleChange} />
+          <PrimaryButton>Send</PrimaryButton>
+        </Form>
       </AuthenticatedLayout>
     ) : (
       <UnAuthenticatedUserContent />
