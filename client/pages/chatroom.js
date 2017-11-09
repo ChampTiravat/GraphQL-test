@@ -1,29 +1,17 @@
 import React from "react";
-import styled from "styled-components";
 
+import withData from "../core/withData";
 import { Form, Input } from "../components/Form";
 import { PrimaryButton } from "../components/Button";
 import { PageHeading } from "../components/Content";
 import {
+  ChatMessagesContainer,
+  ChatMessage
+} from "../components/ChatMessagePanel";
+import {
   UnAuthenticatedLayout,
   AuthenticatedLayout
 } from "../components/Layout";
-import withData from "../core/withData";
-
-const ChatMessagesContainer = styled.ul`
-  width: 100%;
-  background-color: lightblue;
-  height: 400px;
-  padding: 0;
-  overflow-y: scroll;
-`;
-
-const ChatMessage = styled.li`
-  padding: 1em;
-  display: block;
-  font-size: 0.9em;
-  border: 2px solid #fff;
-`;
 
 const UnAuthenticatedUserContent = () => (
   <UnAuthenticatedLayout>
@@ -46,6 +34,12 @@ class Index extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     const { formData } = this.state;
+
+    if (!formData) {
+      alert("Please type something!");
+      return;
+    }
+
     this.setState(prevState => ({
       messages: prevState.messages.concat(formData)
     }));
