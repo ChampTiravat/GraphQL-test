@@ -119,5 +119,6 @@ export default {
         };
       }
     }
-  }
+  },
+  Subscription: {}
 };

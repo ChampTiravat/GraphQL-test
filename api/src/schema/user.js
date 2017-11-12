@@ -13,6 +13,13 @@ export default `
         error: [String!]
         user: User
     }
+
+    type ChatMessageResponse {
+        success: Boolean!
+        sender: User
+        reciever: User
+        message: String
+    }
     
     type Query {
         getUser(name: String!): User
@@ -22,6 +29,10 @@ export default `
     type Mutation {
         registerUser(name: String!, email: String!, password: String!): Boolean!
         login(email: String!, password: String!): LoginResponse!
+    }
+
+    type Subscription {
+        sendChatMessage(message: String!): ChatMessageResponse!
     }
 
 `;
