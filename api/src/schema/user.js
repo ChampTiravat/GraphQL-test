@@ -31,7 +31,7 @@ export default `
     }
 
     type Subscription {
-        sendChatMessage(message: String!) ChatMessageResponse!
+        sendChatMessage(message: String!): ChatMessageResponse!
     }
 
 `;
