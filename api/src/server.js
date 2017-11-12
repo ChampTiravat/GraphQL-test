@@ -2,15 +2,18 @@ import express from "express";
 import { graphqlExpress, graphiqlExpress } from "apollo-server-express";
 import { makeExecutableSchema } from "graphql-tools";
 import { fileLoader, mergeTypes, mergeResolvers } from "merge-graphql-schemas";
+import { execute, subscribe } from "graphql";
+import { createServer } from "http";
+import { SubscriptionServer } from "subscriptions-transport-ws";
+import { attachUserToApolloContext } from "./helpers/authentication";
 import bodyParser from "body-parser";
 import cors from "cors";
 import mongoose from "mongoose";
 import path from "path";
 import bluebird from "bluebird";
 
-import { attachUserToApolloContext } from "./helpers/authentication";
-
 const app = express();
+const webServer = createServer(app);
 
 /**
  * @desc Mongoose Connection and its configurations
@@ -44,7 +47,7 @@ app.use(
   attachUserToApolloContext,
   (req, res, next) => {
     if (req.user) {
-      console.log('Current user :' + req.user.name);
+      console.log("Current user :" + req.user.name);
     }
     next();
   },
@@ -67,10 +70,23 @@ app.use(
   })
 );
 
-app.listen(4000, err => {
+const subscriptionMetaData = {
+  execute,
+  subscribe,
+  schema
+};
+
+const subscriptionConfig = {
+  server: webServer,
+  path: "/subscriptions"
+};
+
+webServer.listen(4000, err => {
   console.log(`=                             =`);
   console.log(`===============================`);
   console.log(`= Server started at port 4000 =`);
   console.log(`===============================`);
   console.log(`=                             =`);
+
+  new SubscriptionServer(subscriptionMetaData, subscriptionConfig);
 });
