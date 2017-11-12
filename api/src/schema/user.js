@@ -15,9 +15,10 @@ export default `
     }
 
     type ChatMessageResponse {
-        sender: User!
-        reciever: User!
-        message: String!
+        success: Boolean!
+        sender: User
+        reciever: User
+        message: String
     }
     
     type Query {
