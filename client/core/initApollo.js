@@ -57,7 +57,7 @@ if (process.browser) {
 
 const create = () => {
   return new ApolloClient({
-    ssrMode: true, //!process.browser, // Disables forceFetch on the server (so queries are only run once)
+    ssrMode: !process.browser, // Disables forceFetch on the server (so queries are only run once)
     link: graphqlConnectionLink,
     cache: new InMemoryCache()
   });
