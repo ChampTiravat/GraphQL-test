@@ -14,13 +14,6 @@ export default `
         user: User
     }
 
-    type ChatMessageResponse {
-        success: Boolean!
-        sender: User
-        reciever: User
-        message: String
-    }
-    
     type Query {
         getUser(name: String!): User
         getUsers: [User]
@@ -30,9 +23,4 @@ export default `
         registerUser(name: String!, email: String!, password: String!): Boolean!
         login(email: String!, password: String!): LoginResponse!
     }
-
-    type Subscription {
-        sendChatMessage(message: String!): ChatMessageResponse!
-    }
-
 `;

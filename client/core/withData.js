@@ -41,8 +41,6 @@ export default ComposedComponent => {
         try {
           // Run all GraphQL queries
           await getDataFromTree(
-            // No need to use the Redux Provider
-            // because Apollo sets up the store for us
             <ApolloProvider client={apollo}>
               <Provider store={redux}>
                 <ComposedComponent url={url} {...composedInitialProps} />
@@ -60,10 +58,11 @@ export default ComposedComponent => {
 
         // Extract query data from the store
         const state = redux.getState();
+        // console.log(state);
 
         // No need to include other initial Redux state because when it
         // initialises on the client-side it'll create it again anyway
-        /* 
+        /*
         serverState = {
           apollo: {
             // Only include the Apollo data state
